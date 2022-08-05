@@ -1,0 +1,25 @@
+.option * {
+    margin: 0;
+    padding: 0;
+}
+
+.option {
+    text-align: center;
+    width: 300px;
+    padding: 10px;
+    border: 1px solid red;
+
+}
+
+.title__picked {
+    display: flex;
+    justify-content: space-between;
+}
+
+.option__title {
+    font-size: 16px;
+}
+
+.option__choices {
+    text-align: left;
+}
