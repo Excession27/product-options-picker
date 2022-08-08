@@ -1,8 +1,7 @@
 import React from "react";
 
 import "./App.css";
-//import Option from "./components/Option/index1";
-import Option from "./components/Option/index";
+import OptionGroup from "./containers/OptionGroup";
 
 export const data = [
   { name: "flyer classic" },
@@ -11,15 +10,6 @@ export const data = [
   { name: "leaflets / invitation cards" },
   { name: "Saddle-stiched magazines" },
   { name: "enveloped mailing" },
-];
-
-export const info = [
-  "flyer classic",
-  "postcard",
-  "self-mailer",
-  "leaflets / invitation cards",
-  "Saddle-stiched magazines",
-  "enveloped mailing",
 ];
 
 const podaci = [
@@ -103,7 +93,7 @@ const podaci = [
 function App() {
   return (
     <div className="App">
-      <Option title={"Product"} optionsArray={info} />
+      <OptionGroup />
     </div>
   );
 }
