@@ -1,10 +1,15 @@
+import { Collapse, Transition } from "@mantine/core";
 import React, { useContext, useState } from "react";
-import { OptionContext, OptionContextType } from "../../hoc/OptionsContext";
+import {
+  ChosenOptionsType,
+  OptionContext,
+  OptionContextType,
+} from "../../hoc/OptionsContext";
 import "./OptionStep.css";
 
 type Props = {
   title: string;
-  optionsArray: string[];
+  optionsArray: { name: string }[];
   id: number;
 };
 
@@ -26,37 +31,64 @@ const OptionStep = ({ title, optionsArray, id }: Props) => {
       setChosen(id + 1);
     }
   };
+
   console.log(chosen, id);
   return (
-    <div
-      className="option"
-      onClick={() => {
-        if (selected.isSet) {
+    <>
+      {/* <Collapse
+        in={id === chosen}
+        transitionDuration={500}
+        transitionTimingFunction="linear"
+      > */}
+      <div
+        className={`option ${chosen < id && "disabled"}`}
+        onClick={() => {
           setSelected({ isSet: false, text: "" });
-        }
-        if (chosen > id) {
-          setChosen(id);
-        }
-      }}
-    >
-      <div className="title__picked">
-        <h2 className="option__title">{title}</h2> <p>{selected.text}</p>
-      </div>
 
-      {chosen === id &&
-        optionsArray.map((option: any, index) => (
-          <div key={index} className="option__choices">
-            <input
-              type="radio"
-              name={"test"}
-              id={`${title}${index}`}
-              value={option}
-              onChange={handleChange}
-            />
-            <label htmlFor={`${title}${index}`}>{option}</label>
-          </div>
-        ))}
-    </div>
+          if (chosen > id) {
+            setChosen(id);
+          }
+        }}
+      >
+        <div className="title__picked">
+          <h2 className="option__title">{title}</h2>{" "}
+          <Transition
+            mounted={selected.text.length > 0}
+            transition="scale-x"
+            duration={400}
+            timingFunction="ease"
+          >
+            {(style) => <p style={style}>{selected.text}</p>}
+          </Transition>
+        </div>
+
+        <Transition
+          mounted={id === chosen}
+          transition="fade"
+          duration={600}
+          timingFunction="ease"
+        >
+          {(style) => (
+            <div style={style}>
+              {chosen === id &&
+                optionsArray.map((option, index) => (
+                  <div key={index} className="option__choices">
+                    <input
+                      type="radio"
+                      name={"test"}
+                      id={`${title}${index}`}
+                      value={option.name}
+                      onChange={handleChange}
+                    />
+                    <label htmlFor={`${title}${index}`}>{option.name}</label>
+                  </div>
+                ))}
+            </div>
+          )}
+        </Transition>
+      </div>
+      {/* </Collapse> */}
+    </>
   );
 };
 
