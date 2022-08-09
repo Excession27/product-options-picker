@@ -22,6 +22,9 @@ const OptionStep = ({ title, optionsArray, id }: Props) => {
   });
   const handleChange = (e: any) => {
     setSelected({ isSet: true, text: e.target.value });
+    if (chosen <= id) {
+      setChosen(id + 1);
+    }
   };
   console.log(chosen, id);
   return (
@@ -31,21 +34,14 @@ const OptionStep = ({ title, optionsArray, id }: Props) => {
         if (selected.isSet) {
           setSelected({ isSet: false, text: "" });
         }
-        if (chosen <= id) {
-          setChosen(id + 1);
-        }
         if (chosen > id) {
           setChosen(id);
         }
       }}
     >
-      {selected.isSet ? (
-        <div className="title__picked">
-          <h2 className="option__title">{title}</h2> <p>{selected.text}</p>
-        </div>
-      ) : (
-        <h2 className="option__title">{title}</h2>
-      )}
+      <div className="title__picked">
+        <h2 className="option__title">{title}</h2> <p>{selected.text}</p>
+      </div>
 
       {chosen === id &&
         optionsArray.map((option: any, index) => (
@@ -55,7 +51,6 @@ const OptionStep = ({ title, optionsArray, id }: Props) => {
               name={"test"}
               id={`${title}${index}`}
               value={option}
-              checked={selected === option}
               onChange={handleChange}
             />
             <label htmlFor={`${title}${index}`}>{option}</label>
