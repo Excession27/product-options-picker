@@ -48,10 +48,10 @@ const OptionGroup = () => {
   return (
     <OptionContextProvider>
       <div className="option-group">
-        <Option key={1} title={"Product"} optionsArray={info} id={0} />
-        <Option key={2} title={"Format"} optionsArray={info1} id={1} />
-        <Option key={3} title={"Material"} optionsArray={info2} id={2} />
-        <Option key={4} title={"Color"} optionsArray={info2} id={3} />
+        <Option key={1} title={"product"} optionsArray={info} id={0} />
+        <Option key={2} title={"format"} optionsArray={info1} id={1} />
+        <Option key={3} title={"material"} optionsArray={info2} id={2} />
+        <Option key={4} title={"color"} optionsArray={info2} id={3} />
       </div>
     </OptionContextProvider>
   );

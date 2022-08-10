@@ -12,6 +12,10 @@ export type ChosenOptionsType = {
   color: string;
 };
 
+type IObjectKeys = {
+  [key: string]: string | number;
+};
+
 export type OptionContextType = {
   chosen: number;
   setChosen: Dispatch<SetStateAction<number>>;
@@ -22,7 +26,12 @@ export type OptionContextType = {
 const initialState = {
   chosen: 0,
   setChosen: () => {},
-  chosenList: {} as ChosenOptionsType,
+  chosenList: {
+    product: "",
+    format: "",
+    material: "",
+    color: "",
+  },
   setChosenList: () => {},
 };
 
@@ -30,9 +39,12 @@ export const OptionContext = createContext<OptionContextType>(initialState);
 
 const OptionContextProvider = ({ children }: any) => {
   const [chosen, setChosen] = useState<number>(0);
-  const [chosenList, setChosenList] = useState<ChosenOptionsType>(
-    {} as ChosenOptionsType
-  );
+  const [chosenList, setChosenList] = useState<ChosenOptionsType>({
+    product: "",
+    format: "",
+    material: "",
+    color: "",
+  });
 
   return (
     <OptionContext.Provider
