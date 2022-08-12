@@ -1,4 +1,3 @@
-import React, { createContext } from "react";
 import OptionContextProvider from "../../hoc/OptionsContext";
 import Option from "../../components/Option/index";
 import "./OptionGroup.css";

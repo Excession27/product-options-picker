@@ -33,5 +33,9 @@
 
 label {
     display: inline-block;
+    height: 22px;
+}
 
+.overflo {
+    overflow: hidden;
 }

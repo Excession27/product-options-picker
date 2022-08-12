@@ -12,10 +12,6 @@ export type ChosenOptionsType = {
   color: string;
 };
 
-type IObjectKeys = {
-  [key: string]: string | number;
-};
-
 export type OptionContextType = {
   chosen: number;
   setChosen: Dispatch<SetStateAction<number>>;
