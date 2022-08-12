@@ -1,5 +1,4 @@
 import React from "react";
-
 import "./App.css";
 import OptionGroup from "./containers/OptionGroup";
 
