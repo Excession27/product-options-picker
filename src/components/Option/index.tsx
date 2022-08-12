@@ -1,7 +1,8 @@
 import { Transition } from "@mantine/core";
-import React, { ChangeEvent, useContext, useRef } from "react";
+import React, { ChangeEvent, useContext, useEffect, useRef } from "react";
 import { OptionContext, OptionContextType } from "../../hoc/OptionsContext";
 import "./OptionStep.css";
+import useOptionQuery from "./useOptionQuery";
 
 type PropertyType = "color" | "product" | "format" | "material";
 type Props = {
@@ -9,11 +10,16 @@ type Props = {
   optionsArray: { name: string }[];
   id: number;
 };
-
-const OptionStep = ({ title, optionsArray, id }: Props) => {
+// TODO: optionsArray's type has to match the one provided by the API
+const OptionStep = ({ title, id, optionsArray }: Props) => {
   const { chosen, setChosen, chosenList, setChosenList } =
     useContext<OptionContextType>(OptionContext);
-  const labelRef = useRef<HTMLLabelElement>(null);
+
+  const data = useOptionQuery();
+
+  if (typeof optionsArray === "undefined" && title === "format") {
+    optionsArray = data;
+  }
 
   const animateHeight = {
     out: { opacity: 0.0, height: 0 },
@@ -122,7 +128,7 @@ const OptionStep = ({ title, optionsArray, id }: Props) => {
         >
           {(styleDiv) => (
             <div style={styleDiv}>
-              {optionsArray.map((option, index) => (
+              {optionsArray?.map((option, index) => (
                 <div key={index} className="option__choices">
                   <input
                     type="radio"
@@ -131,9 +137,7 @@ const OptionStep = ({ title, optionsArray, id }: Props) => {
                     value={option.name}
                     onChange={handleChange}
                   />
-                  <label ref={labelRef} htmlFor={`${title}${index}`}>
-                    {option.name}
-                  </label>
+                  <label htmlFor={`${title}${index}`}>{option.name}</label>
                 </div>
               ))}
             </div>
