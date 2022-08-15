@@ -6,49 +6,41 @@ import React, {
 } from "react";
 
 export type ChosenOptionsType = {
-  product: string;
-  format: string;
-  material: string;
-  color: string;
+  format?: string;
+  material?: string;
+  color?: string;
+  pages?: number;
 };
 
 export type OptionContextType = {
-  chosen: number;
+  chosenId: number;
   setChosen: Dispatch<SetStateAction<number>>;
-  chosenList: ChosenOptionsType;
-  setChosenList: Dispatch<SetStateAction<ChosenOptionsType>>;
+  chosenProperties: ChosenOptionsType;
+  setChosenProperties: Dispatch<SetStateAction<ChosenOptionsType>>;
 };
 
 const initialState = {
-  chosen: 0,
+  chosenId: 0,
   setChosen: () => {},
-  chosenList: {
-    product: "",
-    format: "",
-    material: "",
-    color: "",
-  },
-  setChosenList: () => {},
+  chosenProperties: {},
+  setChosenProperties: () => {},
 };
 
 export const OptionContext = createContext<OptionContextType>(initialState);
 
 const OptionContextProvider = ({ children }: any) => {
-  const [chosen, setChosen] = useState<number>(0);
-  const [chosenList, setChosenList] = useState<ChosenOptionsType>({
-    product: "",
-    format: "",
-    material: "",
-    color: "",
-  });
+  const [chosenId, setChosen] = useState<number>(0);
+  const [chosenProperties, setChosenProperties] = useState<ChosenOptionsType>(
+    {}
+  );
 
   return (
     <OptionContext.Provider
       value={{
-        chosen,
+        chosenId,
         setChosen,
-        chosenList,
-        setChosenList,
+        chosenProperties,
+        setChosenProperties,
       }}
     >
       {children}
