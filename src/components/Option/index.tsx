@@ -54,6 +54,7 @@ const OptionStep = ({ title, id }: Props) => {
     useContext<OptionContextType>(OptionContext);
 
   const [animateHeight, setAnimateHeight] = useState<any>({});
+
   const fetch = useOptionQuery(chosenProperties)?.map((item) => {
     if (title === "material") {
       return `${item.weight} ${item[title]}`;
@@ -61,7 +62,6 @@ const OptionStep = ({ title, id }: Props) => {
     return item[title];
   });
 
-  //const optionsArray = useMemo(() => Array.from(new Set(fetch)), [fetch]);
   const optionsArray = Array.from(new Set(fetch));
 
   useEffect(() => {
