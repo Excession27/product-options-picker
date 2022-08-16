@@ -1,12 +1,10 @@
 import { Transition } from "@mantine/core";
-import { listenerCount } from "process";
 import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import {
   ChosenOptionsType,
   OptionContext,
   OptionContextType,
 } from "../../hoc/OptionsContext";
-import { IProductPropertiesType } from "../../types";
 import "./OptionStep.css";
 import useOptionQuery from "./useOptionQuery";
 
@@ -16,29 +14,29 @@ type Props = {
   id: number;
 };
 
-const clearOptions = (list: ChosenOptionsType, title: PropertyType) => {
+const clearOptions = (properties: ChosenOptionsType, title: PropertyType) => {
   if (title === "format") {
-    list = {
-      format: "",
-      color: "",
-      material: "",
+    properties = {};
+  }
+  if (title === "pages") {
+    properties = {
+      format: properties.format,
     };
   }
   if (title === "material") {
-    list = {
-      format: list.format,
-      material: "",
-      color: "",
+    properties = {
+      format: properties.format,
+      pages: properties.pages,
     };
   }
   if (title === "color") {
-    list = {
-      format: list.format,
-      material: list.material,
-      color: "",
+    properties = {
+      format: properties.format,
+      pages: properties.pages,
+      material: properties.material,
     };
   }
-  return list;
+  return properties;
 };
 
 const setCorrectValues = (object: any, title: PropertyType, e: any) => {
@@ -51,15 +49,21 @@ const setCorrectValues = (object: any, title: PropertyType, e: any) => {
   return object;
 };
 
-// TODO: optionsArray's type has to match the one provided by the API
 const OptionStep = ({ title, id }: Props) => {
-  const { chosenId, setChosen, chosenProperties, setChosenProperties } =
+  const { chosenId, setChosenId, chosenProperties, setChosenProperties } =
     useContext<OptionContextType>(OptionContext);
 
   const [animateHeight, setAnimateHeight] = useState<any>({});
+  const fetch = useOptionQuery(chosenProperties)?.map((item) => {
+    if (title === "material") {
+      return `${item.weight} ${item[title]}`;
+    }
+    return item[title];
+  });
 
-  const optionsArray = useOptionQuery(chosenProperties);
-  //const setOptionsArray = Array.from(new Set(optionsArray));
+  //const optionsArray = useMemo(() => Array.from(new Set(fetch)), [fetch]);
+  const optionsArray = Array.from(new Set(fetch));
+
   useEffect(() => {
     setAnimateHeight(() => ({
       out: { opacity: 0, height: 0 },
@@ -70,15 +74,13 @@ const OptionStep = ({ title, id }: Props) => {
       common: { overflow: "hidden" },
       transitionProperty: "height",
     }));
-  }, [optionsArray]);
-
-  console.log(optionsArray);
+  }, [optionsArray.length]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setChosenProperties((properties) => setCorrectValues(properties, title, e));
 
     if (chosenId <= id) {
-      setChosen(id + 1);
+      setChosenId(id + 1);
     }
   };
 
@@ -86,7 +88,7 @@ const OptionStep = ({ title, id }: Props) => {
     setChosenProperties((properties) => clearOptions(properties, title));
 
     if (chosenId > id) {
-      setChosen(id);
+      setChosenId(id);
     }
   };
 
@@ -118,12 +120,12 @@ const OptionStep = ({ title, id }: Props) => {
                 <div key={index} className="option__choices">
                   <input
                     type="radio"
-                    name={"test"}
+                    name={title}
                     id={`${title}${index}`}
-                    value={option[title]}
+                    value={option}
                     onChange={handleChange}
                   />
-                  <label htmlFor={`${title}${index}`}>{option[title]}</label>
+                  <label htmlFor={`${title}${index}`}>{option}</label>
                 </div>
               ))}
             </div>

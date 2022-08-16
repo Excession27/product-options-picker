@@ -14,14 +14,14 @@ export type ChosenOptionsType = {
 
 export type OptionContextType = {
   chosenId: number;
-  setChosen: Dispatch<SetStateAction<number>>;
+  setChosenId: Dispatch<SetStateAction<number>>;
   chosenProperties: ChosenOptionsType;
   setChosenProperties: Dispatch<SetStateAction<ChosenOptionsType>>;
 };
 
 const initialState = {
   chosenId: 0,
-  setChosen: () => {},
+  setChosenId: () => {},
   chosenProperties: {},
   setChosenProperties: () => {},
 };
@@ -29,7 +29,7 @@ const initialState = {
 export const OptionContext = createContext<OptionContextType>(initialState);
 
 const OptionContextProvider = ({ children }: any) => {
-  const [chosenId, setChosen] = useState<number>(0);
+  const [chosenId, setChosenId] = useState<number>(0);
   const [chosenProperties, setChosenProperties] = useState<ChosenOptionsType>(
     {}
   );
@@ -38,7 +38,7 @@ const OptionContextProvider = ({ children }: any) => {
     <OptionContext.Provider
       value={{
         chosenId,
-        setChosen,
+        setChosenId,
         chosenProperties,
         setChosenProperties,
       }}

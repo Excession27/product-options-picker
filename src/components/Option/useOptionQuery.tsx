@@ -9,7 +9,13 @@ const useOptionQuery = (
 ): ProductPropertiesType[] => {
   const { chosenProperties } = useContext<OptionContextType>(OptionContext);
   const { data } = useQuery(["get-options", chosenProperties], async () => {
-    const { data } = await getData(options);
+    const op = { ...options };
+    if (op.material && op.material?.split(" ").length > 0) {
+      op.weight = Number(op.material?.split(" ")[0]);
+      op.material = options.material?.split(" ")[1];
+    }
+
+    const { data } = await getData(op);
     return data;
   });
 

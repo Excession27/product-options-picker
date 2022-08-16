@@ -8,10 +8,10 @@ const OptionGroup = () => {
     <OptionContextProvider>
       <ReactQueryProvider>
         <div className="option-group">
-          <Option key={2} title={"format"} id={0} />
-          <Option key={2} title={"pages"} id={1} />
-          <Option key={3} title={"material"} id={2} />
-          <Option key={4} title={"color"} id={3} />
+          <Option key={0} title={"format"} id={0} />
+          <Option key={1} title={"pages"} id={1} />
+          <Option key={2} title={"material"} id={2} />
+          <Option key={3} title={"color"} id={3} />
         </div>
       </ReactQueryProvider>
     </OptionContextProvider>

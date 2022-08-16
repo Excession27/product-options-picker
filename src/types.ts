@@ -6,7 +6,7 @@ export type ProductPropertiesType = {
   pages: number;
   product_type_id: number;
   product_type_name: string;
-  weigth: number;
+  weight: number;
 };
 
 export type IProductPropertiesType = {
@@ -17,5 +17,5 @@ export type IProductPropertiesType = {
   pages?: number;
   product_type_id?: number;
   product_type_name?: string;
-  weigth?: number;
+  weight?: number;
 };
