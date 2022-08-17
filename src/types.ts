@@ -19,3 +19,5 @@ export type IProductPropertiesType = {
   product_type_name?: string;
   weight?: number;
 };
+
+export type PropertyType = "color" | "format" | "material" | "pages";

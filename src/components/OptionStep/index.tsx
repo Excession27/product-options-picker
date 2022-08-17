@@ -1,19 +1,21 @@
 import { Transition } from "@mantine/core";
-import React, { ChangeEvent, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   ChosenOptionsType,
   OptionContext,
   OptionContextType,
 } from "../../hoc/OptionsContext";
+import { PropertyType } from "../../types";
+import RadioBtn from "../RadioBtn";
 import "./OptionStep.css";
-import useOptionQuery from "./useOptionQuery";
 
-type PropertyType = "color" | "format" | "material" | "pages";
 type Props = {
   title: PropertyType;
   id: number;
+  optionsArray: (string | number)[];
 };
 
+// Ovo moze da se napravi nezavisno od podataka, putem ID-ja da se odredjuje sta treba da se brise i da se podaci smestaju u array
 const clearOptions = (properties: ChosenOptionsType, title: PropertyType) => {
   if (title === "format") {
     properties = {};
@@ -39,50 +41,24 @@ const clearOptions = (properties: ChosenOptionsType, title: PropertyType) => {
   return properties;
 };
 
-const setCorrectValues = (object: any, title: PropertyType, e: any) => {
-  let value = e.target.value;
-  if (title === "pages") {
-    value = Number(e.target.value);
-  }
-  object[title] = value;
-
-  return object;
-};
-
-const OptionStep = ({ title, id }: Props) => {
+const OptionStep = ({ title, id, optionsArray }: Props) => {
   const { chosenId, setChosenId, chosenProperties, setChosenProperties } =
     useContext<OptionContextType>(OptionContext);
 
   const [animateHeight, setAnimateHeight] = useState<any>({});
 
-  const fetch = useOptionQuery(chosenProperties)?.map((item) => {
-    if (title === "material") {
-      return `${item.weight} ${item[title]}`;
-    }
-    return item[title];
-  });
-
-  const optionsArray = Array.from(new Set(fetch));
-
+  // Update height of the radio group
   useEffect(() => {
     setAnimateHeight(() => ({
       out: { opacity: 0, height: 0 },
       in: {
         opacity: 1,
-        height: optionsArray?.length * 22,
+        height: optionsArray?.length * 22 + 1,
       },
       common: { overflow: "hidden" },
       transitionProperty: "height",
     }));
-  }, [optionsArray.length]);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setChosenProperties((properties) => setCorrectValues(properties, title, e));
-
-    if (chosenId <= id) {
-      setChosenId(id + 1);
-    }
-  };
+  }, [optionsArray?.length]);
 
   const clearChoices = () => {
     setChosenProperties((properties) => clearOptions(properties, title));
@@ -117,16 +93,13 @@ const OptionStep = ({ title, id }: Props) => {
           {(styleDiv) => (
             <div style={styleDiv}>
               {optionsArray?.map((option, index) => (
-                <div key={index} className="option__choices">
-                  <input
-                    type="radio"
-                    name={title}
-                    id={`${title}${index}`}
-                    value={option}
-                    onChange={handleChange}
-                  />
-                  <label htmlFor={`${title}${index}`}>{option}</label>
-                </div>
+                <RadioBtn
+                  key={index}
+                  index={index}
+                  title={title}
+                  option={option}
+                  id={id}
+                />
               ))}
             </div>
           )}
