@@ -1,7 +1,7 @@
 import React from "react";
 import { PropertyType } from "../../types";
 
-const RadioBtn = ({
+const RadioBtnList = ({
   title,
   options,
   handleChange,
@@ -28,4 +28,4 @@ const RadioBtn = ({
   );
 };
 
-export default RadioBtn;
+export default RadioBtnList;

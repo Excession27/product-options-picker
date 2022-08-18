@@ -2,6 +2,7 @@ import { Transition } from "@mantine/core";
 import { OptionContextType } from "../../hoc/OptionsContext";
 import { PropertyType } from "../../types";
 import useStepManagement from "../hooks/useStepManagement";
+import RadioBtnList from "../RadioBtn";
 import RadioBtn from "../RadioBtn";
 import "./OptionStep.css";
 
@@ -49,7 +50,7 @@ const OptionStep = ({ title, id, optionsArray, context }: Props) => {
         >
           {(styleDiv) => (
             <div style={styleDiv}>
-              <RadioBtn
+              <RadioBtnList
                 title={title}
                 options={optionsArray}
                 handleChange={handleChange}
