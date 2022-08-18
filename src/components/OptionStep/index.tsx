@@ -2,8 +2,7 @@ import { Transition } from "@mantine/core";
 import { OptionContextType } from "../../hoc/OptionsContext";
 import { PropertyType } from "../../types";
 import useStepManagement from "../hooks/useStepManagement";
-import RadioBtnList from "../RadioBtn";
-import RadioBtn from "../RadioBtn";
+import RadioBtnList from "../RadioBtnList";
 import "./OptionStep.css";
 
 type Props = {
