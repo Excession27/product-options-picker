@@ -41,15 +41,9 @@
 
 .option__radio:hover {
     height: 21px;
+    border-bottom: 1px solid cornflowerblue;
     transition-duration: 500ms;
     transition-property: border;
     opacity: 1;
-    transform: scaleX(1);
 
-    border-bottom: 1px solid cornflowerblue;
-
-}
-
-.overflo {
-    overflow: hidden;
 }

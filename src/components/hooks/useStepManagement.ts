@@ -1,36 +1,69 @@
 import { ChangeEvent } from "react";
 import { ChosenOptionsType, OptionContextType } from "../../hoc/OptionsContext";
 import { PropertyType } from "../../types";
+import useOptionQuery from "../OptionStep/useOptionQuery";
+
+const clearOptions = (properties: ChosenOptionsType, title: PropertyType) => {
+  if (title === "format") {
+    properties = {} as ChosenOptionsType;
+  }
+  if (title === "pages") {
+    properties = {
+      format: properties.format,
+    } as ChosenOptionsType;
+  }
+  if (title === "material") {
+    properties = {
+      format: properties.format,
+      pages: properties.pages,
+    } as ChosenOptionsType;
+  }
+  if (title === "color") {
+    properties = {
+      format: properties.format,
+      pages: properties.pages,
+      material: properties.material,
+    } as ChosenOptionsType;
+  }
+  return properties;
+};
+
+const setCorrectValues = (
+  chosenProperties: ChosenOptionsType,
+  title: PropertyType,
+  e: ChangeEvent<HTMLInputElement>
+) => {
+  let value: string | number = e.target.value;
+  if (title === "pages") {
+    value = Number(e.target.value);
+  }
+  chosenProperties = { ...chosenProperties, [title]: value };
+
+  return chosenProperties;
+};
 
 const useStepManagement = (
   context: OptionContextType,
   title: PropertyType,
   id: number
 ) => {
-  const clearOptions = (properties: ChosenOptionsType, title: PropertyType) => {
-    if (title === "format") {
-      properties = {};
+  let data: (string | number)[] = [];
+  useOptionQuery(context.chosenProperties)?.forEach((item) => {
+    if (context.chosenId === 0) {
+      data.push(item.format);
     }
-    if (title === "pages") {
-      properties = {
-        format: properties.format,
-      };
+    if (context.chosenId === 1) {
+      data.push(item.pages);
     }
-    if (title === "material") {
-      properties = {
-        format: properties.format,
-        pages: properties.pages,
-      };
+    if (context.chosenId === 2) {
+      data.push(`${item.weight} ${item.material}`);
     }
-    if (title === "color") {
-      properties = {
-        format: properties.format,
-        pages: properties.pages,
-        material: properties.material,
-      };
+    if (context.chosenId === 3) {
+      data.push(item.color);
     }
-    return properties;
-  };
+  });
+
+  data = Array.from(new Set(data));
 
   const clearChoices = () => {
     context.setChosenProperties((properties) =>
@@ -40,16 +73,6 @@ const useStepManagement = (
     if (context.chosenId > id) {
       context.setChosenId(id);
     }
-  };
-
-  const setCorrectValues = (object: any, title: PropertyType, e: any) => {
-    let value = e.target.value;
-    if (title === "pages") {
-      value = Number(e.target.value);
-    }
-    object[title] = value;
-
-    return object;
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -62,7 +85,7 @@ const useStepManagement = (
     }
   };
 
-  return { handleChange, clearChoices };
+  return { data, handleChange, clearChoices };
 };
 
 export default useStepManagement;

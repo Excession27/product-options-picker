@@ -1,4 +1,5 @@
 import { Transition } from "@mantine/core";
+import { useMemo } from "react";
 import { OptionContextType } from "../../hoc/OptionsContext";
 import { PropertyType } from "../../types";
 import useStepManagement from "../hooks/useStepManagement";
@@ -8,22 +9,27 @@ import "./OptionStep.css";
 type Props = {
   title: PropertyType;
   id: number;
-  optionsArray: (string | number)[];
   context: OptionContextType;
 };
 
-const OptionStep = ({ title, id, optionsArray, context }: Props) => {
-  const { clearChoices, handleChange } = useStepManagement(context, title, id);
+const OptionStep = ({ title, id, context }: Props) => {
+  const {
+    clearChoices,
+    handleChange,
+    data: optionsArray,
+  } = useStepManagement(context, title, id);
 
-  const animateHeight = {
-    out: { opacity: 0, height: 0 },
-    in: {
-      opacity: 1,
-      height: optionsArray.length * 22 + 1,
-    },
-    common: { overflow: "hidden" },
-    transitionProperty: "height",
-  };
+  const animateHeight = useMemo(() => {
+    return {
+      out: { opacity: 0, height: 0 },
+      in: {
+        opacity: 1,
+        height: optionsArray.length * 22,
+      },
+      common: { overflow: "hidden" },
+      transitionProperty: "height",
+    };
+  }, [optionsArray.length]);
 
   return (
     <>

@@ -1,15 +1,17 @@
 import React, {
   createContext,
   Dispatch,
+  FC,
+  ReactNode,
   SetStateAction,
   useState,
 } from "react";
 
 export type ChosenOptionsType = {
-  format?: string;
-  material?: string;
-  color?: string;
-  pages?: number;
+  format: string;
+  material: string;
+  color: string;
+  pages: number;
 };
 
 export type OptionContextType = {
@@ -22,16 +24,20 @@ export type OptionContextType = {
 const initialState = {
   chosenId: 0,
   setChosenId: () => {},
-  chosenProperties: {},
+  chosenProperties: {} as ChosenOptionsType,
   setChosenProperties: () => {},
+};
+
+type ContextType = {
+  children: ReactNode;
 };
 
 export const OptionContext = createContext<OptionContextType>(initialState);
 
-const OptionContextProvider = ({ children }: any) => {
+const OptionContextProvider: FC<ContextType> = ({ children }) => {
   const [chosenId, setChosenId] = useState<number>(0);
   const [chosenProperties, setChosenProperties] = useState<ChosenOptionsType>(
-    {}
+    {} as ChosenOptionsType
   );
 
   return (
