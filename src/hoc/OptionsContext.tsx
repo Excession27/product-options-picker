@@ -19,6 +19,8 @@ export type OptionContextType = {
   setChosenId: Dispatch<SetStateAction<number>>;
   chosenProperties: ChosenOptionsType;
   setChosenProperties: Dispatch<SetStateAction<ChosenOptionsType>>;
+  next: boolean;
+  setNext: Dispatch<SetStateAction<boolean>>;
 };
 
 const initialState = {
@@ -26,6 +28,8 @@ const initialState = {
   setChosenId: () => {},
   chosenProperties: {} as ChosenOptionsType,
   setChosenProperties: () => {},
+  next: false,
+  setNext: () => {},
 };
 
 type ContextType = {
@@ -39,6 +43,7 @@ const OptionContextProvider: FC<ContextType> = ({ children }) => {
   const [chosenProperties, setChosenProperties] = useState<ChosenOptionsType>(
     {} as ChosenOptionsType
   );
+  const [next, setNext] = useState<boolean>(false);
 
   return (
     <OptionContext.Provider
@@ -47,6 +52,8 @@ const OptionContextProvider: FC<ContextType> = ({ children }) => {
         setChosenId,
         chosenProperties,
         setChosenProperties,
+        next,
+        setNext,
       }}
     >
       {children}

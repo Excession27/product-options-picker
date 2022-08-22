@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import ReactQueryProvider from "./components/Providers";
-import OptionGroup from "./containers/OptionGroup";
+import ProductPicker from "./containers/ProductPicker";
 import OptionContextProvider from "./hoc/OptionsContext";
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <OptionContextProvider>
         <ReactQueryProvider>
-          <OptionGroup />
+          <ProductPicker />
         </ReactQueryProvider>
       </OptionContextProvider>
     </div>

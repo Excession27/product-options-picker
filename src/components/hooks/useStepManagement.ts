@@ -42,6 +42,9 @@ const setCorrectValues = (
   return chosenProperties;
 };
 
+const getPropertiesString = (chosenProperties: ChosenOptionsType): string =>
+  `${chosenProperties.format} - ${chosenProperties.pages} - ${chosenProperties.material} - ${chosenProperties.color}`;
+
 const useStepManagement = (
   context: OptionContextType,
   title: PropertyType,
@@ -85,7 +88,11 @@ const useStepManagement = (
     }
   };
 
-  return { data, handleChange, clearChoices };
+  const chosenPropertiesString: string = getPropertiesString(
+    context.chosenProperties
+  );
+
+  return { data, handleChange, clearChoices, chosenPropertiesString };
 };
 
 export default useStepManagement;
