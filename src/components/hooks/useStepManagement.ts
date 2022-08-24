@@ -34,10 +34,19 @@ const setCorrectValues = (
   e: ChangeEvent<HTMLInputElement>
 ) => {
   let value: string | number = e.target.value;
-  if (title === "pages") {
-    value = Number(e.target.value);
+
+  if (title === "format") {
+    chosenProperties.format = value;
   }
-  chosenProperties = { ...chosenProperties, [title]: value };
+  if (title === "material") {
+    chosenProperties.material = value;
+  }
+  if (title === "color") {
+    chosenProperties.color = value;
+  }
+  if (title === "pages") {
+    chosenProperties.pages = Number(value);
+  }
 
   return chosenProperties;
 };
@@ -69,13 +78,11 @@ const useStepManagement = (
   data = Array.from(new Set(data));
 
   const clearChoices = () => {
-    context.setChosenProperties((properties) =>
-      clearOptions(properties, title)
-    );
+    context.setChosenProperties((properties) => {
+      return clearOptions(properties, title);
+    });
 
-    if (context.chosenId > id) {
-      context.setChosenId(id);
-    }
+    context.setChosenId(id);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -83,9 +90,7 @@ const useStepManagement = (
       setCorrectValues(properties, title, e)
     );
 
-    if (context.chosenId <= id) {
-      context.setChosenId(id + 1);
-    }
+    context.setChosenId(id + 1);
   };
 
   const chosenPropertiesString: string = getPropertiesString(

@@ -48,10 +48,11 @@ const OptionStep = ({ title, id, context }: Props) => {
           </Transition>
         </div>
         <Transition
-          mounted={context.chosenId === id && optionsArray?.length > 0}
+          mounted={context.chosenId === id}
           transition={animateHeight}
           duration={400}
           timingFunction="ease-in-out"
+          exitDuration={400}
         >
           {(styleDiv) => (
             <div style={styleDiv}>
@@ -59,6 +60,7 @@ const OptionStep = ({ title, id, context }: Props) => {
                 title={title}
                 options={optionsArray}
                 handleChange={handleChange}
+                context={context}
               />
             </div>
           )}
