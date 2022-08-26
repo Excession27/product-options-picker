@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios";
+import { AxiosRequestConfig, AxiosResponse } from "axios";
 import axiosInstance from "../httpClient";
 import { IProductPropertiesType, ProductPropertiesType } from "../types";
 
@@ -7,8 +7,8 @@ export const getData = (
 ): Promise<AxiosResponse<any, ProductPropertiesType[]>> =>
   axiosInstance.post(`api/product/search`, options);
 
-export const editEntry = (id: number, options: IProductPropertiesType) =>
+export const editEntry = (id: number, options: AxiosRequestConfig) =>
   axiosInstance.put(`api/product/${id}`, options);
 
-export const deleteEntry = (id: number) =>
+export const deleteEntry = (id: string) =>
   axiosInstance.delete(`api/product/${id}`);

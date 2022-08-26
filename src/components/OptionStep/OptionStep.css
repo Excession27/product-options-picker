@@ -8,7 +8,12 @@
     width: 300px;
     padding: 10px;
     border-bottom: 1px solid gray;
+
 }
+
+/* .option p {
+    overflow: hidden;
+} */
 
 .title__picked {
     display: flex;
