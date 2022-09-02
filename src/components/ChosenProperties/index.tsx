@@ -1,5 +1,5 @@
 import React from "react";
-import { OptionContextType } from "../../hoc/OptionsContext";
+import { OptionContextType } from "../Providers/OptionContextProvider/OptionsContext";
 import useStepManagement from "../hooks/useStepManagement";
 
 const ChosenProperties = ({ context }: { context: OptionContextType }) => {

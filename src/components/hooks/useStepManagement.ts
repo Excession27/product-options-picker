@@ -1,5 +1,8 @@
 import { ChangeEvent } from "react";
-import { ChosenOptionsType, OptionContextType } from "../../hoc/OptionsContext";
+import {
+  ChosenOptionsType,
+  OptionContextType,
+} from "../Providers/OptionContextProvider/OptionsContext";
 import { PropertyType } from "../../types";
 import useOptionQuery from "../OptionStep/useOptionQuery";
 

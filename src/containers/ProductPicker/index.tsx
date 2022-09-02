@@ -1,5 +1,8 @@
 import React, { useContext } from "react";
-import { OptionContext, OptionContextType } from "../../hoc/OptionsContext";
+import {
+  OptionContext,
+  OptionContextType,
+} from "../../components/Providers/OptionContextProvider/OptionsContext";
 import OptionGroup from "../OptionGroup";
 import PropertiesOverview from "../PropertiesOverview";
 

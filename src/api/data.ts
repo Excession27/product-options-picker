@@ -1,5 +1,5 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
-import axiosInstance from "../httpClient";
+import axiosInstance from "./axiosInstance";
 import { IProductPropertiesType, ProductPropertiesType } from "../types";
 
 export const getData = (

@@ -1,6 +1,6 @@
 import Next from "../../components/Next";
 import Option from "../../components/OptionStep/index";
-import { OptionContextType } from "../../hoc/OptionsContext";
+import { OptionContextType } from "../../components/Providers/OptionContextProvider/OptionsContext";
 import "./OptionGroup.css";
 
 const OptionGroup = ({ context }: { context: OptionContextType }) => {

@@ -6,6 +6,7 @@ import React, {
   SetStateAction,
   useState,
 } from "react";
+import { ProductPropertiesType } from "../../../types";
 
 export type ChosenOptionsType = {
   format: string;
@@ -21,6 +22,8 @@ export type OptionContextType = {
   setChosenProperties: Dispatch<SetStateAction<ChosenOptionsType>>;
   next: boolean;
   setNext: Dispatch<SetStateAction<boolean>>;
+  foundProduct: ProductPropertiesType;
+  setFoundProduct: Dispatch<SetStateAction<ProductPropertiesType>>;
 };
 
 const initialState = {
@@ -30,6 +33,8 @@ const initialState = {
   setChosenProperties: () => {},
   next: false,
   setNext: () => {},
+  foundProduct: {} as ProductPropertiesType,
+  setFoundProduct: () => {},
 };
 
 type ContextType = {
@@ -44,6 +49,9 @@ const OptionContextProvider: FC<ContextType> = ({ children }) => {
     {} as ChosenOptionsType
   );
   const [next, setNext] = useState<boolean>(false);
+  const [foundProduct, setFoundProduct] = useState<ProductPropertiesType>(
+    {} as ProductPropertiesType
+  );
 
   return (
     <OptionContext.Provider
@@ -54,6 +62,8 @@ const OptionContextProvider: FC<ContextType> = ({ children }) => {
         setChosenProperties,
         next,
         setNext,
+        foundProduct,
+        setFoundProduct,
       }}
     >
       {children}

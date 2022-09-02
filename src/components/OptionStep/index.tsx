@@ -1,6 +1,6 @@
 import { Transition } from "@mantine/core";
 import { useMemo } from "react";
-import { OptionContextType } from "../../hoc/OptionsContext";
+import { OptionContextType } from "../Providers/OptionContextProvider/OptionsContext";
 import { PropertyType } from "../../types";
 import useStepManagement from "../hooks/useStepManagement";
 import RadioBtnList from "../RadioBtnList";
