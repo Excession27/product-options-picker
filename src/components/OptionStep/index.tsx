@@ -8,16 +8,16 @@ import "./OptionStep.css";
 
 type Props = {
   title: PropertyType;
-  id: number;
+  step: number;
   context: OptionContextType;
 };
 
-const OptionStep = ({ title, id, context }: Props) => {
+const OptionStep = ({ title, step, context }: Props) => {
   const {
     clearChoices,
     handleChange,
     data: optionsArray,
-  } = useStepManagement(context, title, id);
+  } = useStepManagement(context, title, step);
 
   const animateHeight = useMemo(() => {
     return {
@@ -33,7 +33,7 @@ const OptionStep = ({ title, id, context }: Props) => {
 
   return (
     <>
-      <div className={`option ${context.chosenId < id && "disabled"}`}>
+      <div className={`option ${context.chosenStep < step && "disabled"}`}>
         <div onClick={clearChoices} className="title__picked">
           <h2 className="option__title">
             {title.charAt(0).toUpperCase() + title.slice(1)}
@@ -48,7 +48,7 @@ const OptionStep = ({ title, id, context }: Props) => {
           </Transition>
         </div>
         <Transition
-          mounted={context.chosenId === id}
+          mounted={context.chosenStep === step}
           transition={animateHeight}
           duration={400}
           timingFunction="ease-in-out"

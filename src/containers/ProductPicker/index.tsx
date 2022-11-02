@@ -10,8 +10,8 @@ const ProductPicker = () => {
   const myContext = useContext<OptionContextType>(OptionContext);
   return (
     <div>
-      {!myContext.next && <OptionGroup context={myContext} />}
-      {myContext.next && <PropertiesOverview />}
+      <OptionGroup context={myContext} />
+      <PropertiesOverview />
     </div>
   );
 };

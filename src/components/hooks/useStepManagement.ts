@@ -1,27 +1,27 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect } from 'react';
 import {
   ChosenOptionsType,
   OptionContextType,
-} from "../Providers/OptionContextProvider/OptionsContext";
-import { PropertyType } from "../../types";
-import useOptionQuery from "../OptionStep/useOptionQuery";
+} from '../Providers/OptionContextProvider/OptionsContext';
+import { PropertyType } from '../../types';
+import useOptionQuery from '../OptionStep/useOptionQuery';
 
 const clearOptions = (properties: ChosenOptionsType, title: PropertyType) => {
-  if (title === "format") {
+  if (title === 'format') {
     properties = {} as ChosenOptionsType;
   }
-  if (title === "pages") {
+  if (title === 'pages') {
     properties = {
       format: properties.format,
     } as ChosenOptionsType;
   }
-  if (title === "material") {
+  if (title === 'material') {
     properties = {
       format: properties.format,
       pages: properties.pages,
     } as ChosenOptionsType;
   }
-  if (title === "color") {
+  if (title === 'color') {
     properties = {
       format: properties.format,
       pages: properties.pages,
@@ -38,16 +38,16 @@ const setCorrectValues = (
 ) => {
   let value: string | number = e.target.value;
 
-  if (title === "format") {
+  if (title === 'format') {
     chosenProperties.format = value;
   }
-  if (title === "material") {
+  if (title === 'material') {
     chosenProperties.material = value;
   }
-  if (title === "color") {
+  if (title === 'color') {
     chosenProperties.color = value;
   }
-  if (title === "pages") {
+  if (title === 'pages') {
     chosenProperties.pages = Number(value);
   }
 
@@ -57,26 +57,44 @@ const setCorrectValues = (
 const getPropertiesString = (chosenProperties: ChosenOptionsType): string =>
   `${chosenProperties.format} - ${chosenProperties.pages} - ${chosenProperties.material} - ${chosenProperties.color}`;
 
+// const params = new URLSearchParams(window.location.search);
+// const id = params.get("id");
+// console.log(typeof id);
+
 const useStepManagement = (
   context: OptionContextType,
   title: PropertyType,
-  id: number
+  step: number
 ) => {
   let data: (string | number)[] = [];
-  useOptionQuery(context.chosenProperties)?.forEach((item) => {
-    if (context.chosenId === 0) {
-      data.push(item.format);
-    }
-    if (context.chosenId === 1) {
-      data.push(item.pages);
-    }
-    if (context.chosenId === 2) {
-      data.push(`${item.weight} ${item.material}`);
-    }
-    if (context.chosenId === 3) {
-      data.push(item.color);
-    }
-  });
+  // useEffect(() => {
+  //   if (!!id) {
+  //     context.setChosenProperties({ id: id } as ChosenOptionsType);
+  //     context.setChosenStep(4);
+  //   }
+  // }, [context]);
+
+  let allData = useOptionQuery(context.chosenProperties);
+
+  if (context.chosenStep < 4) {
+    allData?.forEach((item) => {
+      if (!context.chosenProperties.id) {
+        console.log('has entered');
+        if (context.chosenStep === 0) {
+          data.push(item.format);
+        }
+        if (context.chosenStep === 1) {
+          data.push(item.pages);
+        }
+        if (context.chosenStep === 2) {
+          data.push(`${item.weight} ${item.material}`);
+        }
+        if (context.chosenStep === 3) {
+          data.push(item.color);
+        }
+      }
+    });
+  }
 
   data = Array.from(new Set(data));
 
@@ -85,7 +103,7 @@ const useStepManagement = (
       return clearOptions(properties, title);
     });
 
-    context.setChosenId(id);
+    context.setChosenStep(step);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -93,7 +111,7 @@ const useStepManagement = (
       setCorrectValues(properties, title, e)
     );
 
-    context.setChosenId(id + 1);
+    context.setChosenStep(step + 1);
   };
 
   const chosenPropertiesString: string = getPropertiesString(

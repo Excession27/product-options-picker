@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import ChosenProperties from "../../components/ChosenProperties";
+import React, { useContext, useEffect, useRef } from "react";
 import Edit from "../../components/Edit";
 import {
   OptionContext,
@@ -8,11 +7,21 @@ import {
 
 const PropertiesOverview = () => {
   const myContext = useContext<OptionContextType>(OptionContext);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (myContext.next) dialog!.showModal();
+
+    return () => {
+      dialog!.close();
+    };
+  }, [myContext.next]);
+
   return (
-    <div>
-      <ChosenProperties context={myContext} />
+    <dialog className="ef" ref={dialogRef}>
       <Edit context={myContext} />
-    </div>
+    </dialog>
   );
 };
 

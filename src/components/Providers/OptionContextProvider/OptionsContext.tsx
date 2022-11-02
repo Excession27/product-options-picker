@@ -9,6 +9,7 @@ import React, {
 import { ProductPropertiesType } from "../../../types";
 
 export type ChosenOptionsType = {
+  id?: string;
   format: string;
   material: string;
   color: string;
@@ -16,8 +17,8 @@ export type ChosenOptionsType = {
 };
 
 export type OptionContextType = {
-  chosenId: number;
-  setChosenId: Dispatch<SetStateAction<number>>;
+  chosenStep: number;
+  setChosenStep: Dispatch<SetStateAction<number>>;
   chosenProperties: ChosenOptionsType;
   setChosenProperties: Dispatch<SetStateAction<ChosenOptionsType>>;
   next: boolean;
@@ -27,8 +28,8 @@ export type OptionContextType = {
 };
 
 const initialState = {
-  chosenId: 0,
-  setChosenId: () => {},
+  chosenStep: 0,
+  setChosenStep: () => {},
   chosenProperties: {} as ChosenOptionsType,
   setChosenProperties: () => {},
   next: false,
@@ -44,7 +45,7 @@ type ContextType = {
 export const OptionContext = createContext<OptionContextType>(initialState);
 
 const OptionContextProvider: FC<ContextType> = ({ children }) => {
-  const [chosenId, setChosenId] = useState<number>(0);
+  const [chosenStep, setChosenStep] = useState<number>(0);
   const [chosenProperties, setChosenProperties] = useState<ChosenOptionsType>(
     {} as ChosenOptionsType
   );
@@ -56,8 +57,8 @@ const OptionContextProvider: FC<ContextType> = ({ children }) => {
   return (
     <OptionContext.Provider
       value={{
-        chosenId,
-        setChosenId,
+        chosenStep,
+        setChosenStep,
         chosenProperties,
         setChosenProperties,
         next,

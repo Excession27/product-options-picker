@@ -5,7 +5,6 @@ import "./Next.css";
 
 const Next = ({ context }: { context: OptionContextType }) => {
   const result = useOptionQuery(context.chosenProperties);
-  console.log(result);
   return (
     <button
       onClick={() => {
